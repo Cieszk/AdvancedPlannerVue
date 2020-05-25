@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.sites',
 
     'users',
 
@@ -51,7 +52,7 @@ INSTALLED_APPS = [
     'rest_auth',
     'rest_auth.registration',
     
-    'cripsy_forms',
+    'crispy_forms',
     'webpack_loader'
 ]
 
