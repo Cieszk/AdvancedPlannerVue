@@ -1,17 +1,14 @@
 from rest_framework import generics
-from rest_framework import status
-from rest_framework.response import Response
 from rest_framework.views import APIView
+from rest_framework.response import Response
 
+from users.models import CustomUser
 from users.api.serializers import UserSerializer
 
-
-class UserList(generics.ListCreateAPIView):
+class UserList(generics.ListAPIView):
+    queryset = CustomUser.objects.all()
     serializer_class = UserSerializer
 
-    def post(self, request, format=None):
-        serializer = UserSerializer(data=request.data)
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+class UserDetail(generics.RetrieveAPIView):
+    queryset = CustomUser.objects.all()
+    serializer_class = UserSerializer

@@ -83,13 +83,14 @@ class CustomUser(AbstractBaseUser):
 class Stats(models.Model):
     user = models.OneToOneField(
         settings.AUTH_USER_MODEL,
-        on_delete=models.CASCADE
+        on_delete=models.CASCADE,
+        related_name='stats'
     )
-    tasks_completed = models.IntegerField()
-    tasks_ongoing = models.IntegerField()
-    tasks_abandoned = models.IntegerField()
-    tasks_total = models.IntegerField()
-    tasks_archived = models.IntegerField()
+    tasks_completed = models.IntegerField(null=True)
+    tasks_ongoing = models.IntegerField(null=True)
+    tasks_abandoned = models.IntegerField(null=True)
+    tasks_total = models.IntegerField(null=True)
+    tasks_archived = models.IntegerField(null=True)
 
     class Meta:
         verbose_name_plural = 'Stats'
@@ -102,9 +103,16 @@ class UserProfile(models.Model):
         ('U', 'Unspecified')
     )
 
-    user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='profile')
-    profile_picture = models.ImageField(null=True)
+    user = models.OneToOneField(
+        settings.AUTH_USER_MODEL, 
+        on_delete=models.CASCADE,
+        related_name='profile'
+        )
+    first_name = models.CharField(max_length=40, blank=True, null=True)
+    last_name = models.CharField(max_length=40, blank=True, null=True)
+    date_of_birth = models.DateField(blank=True, null=True)
+    profile_picture = models.ImageField(null=True, blank=True)
     about_me = models.TextField(blank=True, null=True)
     city = models.CharField(max_length=40, blank=True, null=True)
     country = models.CharField(max_length=40, blank=True, null=True)
-    gender = models.CharField(max_length=1, choices=GENDERS, null=True)
+    gender = models.CharField(max_length=1, choices=GENDERS, null=True, blank=True)
