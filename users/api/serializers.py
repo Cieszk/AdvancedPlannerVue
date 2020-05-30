@@ -17,4 +17,4 @@ class UserSerializer(serializers.ModelSerializer):
     stats = StatsSerializer(many=False)
     class Meta:
         model = CustomUser
-        fields = ('email','profile','stats')
+        fields = ('id','email','profile','stats')

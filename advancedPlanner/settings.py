@@ -71,7 +71,7 @@ ROOT_URLCONF = 'advancedPlanner.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [os.path.join(BASE_DIR, 'templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -146,6 +146,9 @@ CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
 # django-contrib-sites
 SITE_ID = 1
+
+# django-registration
+ACCOUNT_ACTIVATION_DAYS = 7
 
 # django-allauth
 ACCOUNT_EMAIL_VERIFICATION = None
