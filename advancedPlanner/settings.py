@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'django.contrib.sites',
 
     'users',
+    'planner',
 
     'rest_framework',
     'rest_framework.authtoken',

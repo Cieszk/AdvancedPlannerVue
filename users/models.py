@@ -91,9 +91,8 @@ class Stats(models.Model):
     )
     tasks_completed = models.IntegerField(null=True)
     tasks_ongoing = models.IntegerField(null=True)
-    tasks_abandoned = models.IntegerField(null=True)
     tasks_total = models.IntegerField(null=True)
-    tasks_archived = models.IntegerField(null=True)
+    recipies_created = models.IntegerField(null=True)
 
     class Meta:
         verbose_name_plural = 'Stats'
