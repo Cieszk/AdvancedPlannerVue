@@ -118,4 +118,4 @@ class UserProfile(models.Model):
     about_me = models.TextField(blank=True, null=True)
     city = models.CharField(max_length=40, blank=True, null=True)
     country = models.CharField(max_length=40, blank=True, null=True)
-    gender = models.CharField(max_length=1, choices=GENDERS, null=True, blank=True)
+    gender = models.CharField(max_length=1, choices=GENDERS, default=GENDERS[2][0])

@@ -8,7 +8,7 @@ from users.api.serializers import UserSerializer, UserProfileSerializer
 from users.api.permissions import IsAccountOwnerOrReadOnly
 
 class UserList(generics.ListAPIView):
-    queryset = CustomUser.objects.all()
+    queryset = CustomUser.objects.all().order_by('id')
     serializer_class = UserSerializer
 
 # class UserDetail(generics.RetrieveAPIView):
@@ -20,7 +20,6 @@ class UserProfileRUAPIView(generics.RetrieveUpdateAPIView):
     permission_classes = (IsAuthenticated, IsAccountOwnerOrReadOnly)
 
     def get_queryset(self):
-        print(self.kwargs)
         if self.kwargs['pk']:
             return UserProfile.objects.filter(user_id=self.kwargs['pk']).order_by('pk')
         else:
