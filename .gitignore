@@ -1,6 +1,6 @@
 
-# Created by https://www.gitignore.io/api/vuejs,django,python,virtualenv
-# Edit at https://www.gitignore.io/?templates=vuejs,django,python,virtualenv
+# Created by https://www.gitignore.io/api/vue,venv,vuejs,django,python
+# Edit at https://www.gitignore.io/?templates=vue,venv,vuejs,django,python
 
 ### Django ###
 *.log
@@ -10,7 +10,8 @@ __pycache__/
 local_settings.py
 db.sqlite3
 db.sqlite3-journal
-secret_key.txt
+media
+.idea
 
 # If your build process includes running collectstatic, then you probably don't need or want to include staticfiles/
 # in your Git repository. Update and uncomment the following line accordingly.
@@ -44,6 +45,7 @@ share/python-wheels/
 .installed.cfg
 *.egg
 MANIFEST
+secret_key.txt
 
 # PyInstaller
 #  Usually these files are written by a python script from a template
@@ -67,7 +69,6 @@ coverage.xml
 *.cover
 .hypothesis/
 .pytest_cache/
-.vscode
 
 # Translations
 *.mo
@@ -167,7 +168,7 @@ dmypy.json
 
 # Pyre type checker
 
-### VirtualEnv ###
+### venv ###
 # Virtualenv
 # http://iamzed.com/2009/05/07/a-primer-on-virtualenv/
 pyvenv.cfg
@@ -180,6 +181,21 @@ env.bak/
 venv.bak/
 pip-selfcheck.json
 
+### Vue ###
+.DS_*
+logs
+**/*.backup.*
+**/*.back.*
+
+node_modules
+bower_components
+
+*.sublime*
+
+psd
+thumb
+sketch
+
 ### Vuejs ###
 # Recommended template: Node.gitignore
 
@@ -187,4 +203,4 @@ node_modules/
 npm-debug.log
 yarn-error.log
 
-# End of https://www.gitignore.io/api/vuejs,django,python,virtualenv
+# End of https://www.gitignore.io/api/vue,venv,vuejs,django,python

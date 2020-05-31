@@ -1,0 +1,11 @@
+{
+    "python.pythonPath": "venv/bin/python3",
+    "sqltools.connections": [
+        {
+            "database": "${workspaceFolder}/db.sqlite3",
+            "dialect": "SQLite",
+            "name": "DjangoDB"
+        }
+    ],
+    "sqltools.useNodeRuntime": true
+}

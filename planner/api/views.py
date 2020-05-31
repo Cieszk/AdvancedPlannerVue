@@ -18,18 +18,18 @@ from planner.api.serializers import (
 )
 from api_utils.permissions import IsAccountOwnerOrDenyAccess, IsAdminOrDenyAccess
 
-
 class TaskListAPIView(viewsets.ModelViewSet):
     serializer_class = TaskSerializer
     permission_classes = (IsAuthenticated, IsAccountOwnerOrDenyAccess)
 
     def get_queryset(self):
         current_user = self.request.user
-        return Task.objects.all().filter(user=current_user)
+        return Task.objects.all().filter(user=current_user, done=False)
 
     def perform_create(self, serializer):
         current_user = self.request.user
         serializer.save(user=current_user)
+
 
 class TaskRUDAPIView(generics.RetrieveUpdateDestroyAPIView):
     serializer_class = TaskSerializer
@@ -54,3 +54,11 @@ class TaskSetAsDoneAPIView(APIView):
         serializer = self.serializer_class(task, context=serializer_context)
 
         return Response(serializer.data, status=status.HTTP_200_OK)
+
+
+class IngredientListAPIView(viewsets.ModelViewSet):
+    serializer_class = IngredientSerializer
+    permission_classes = (IsAuthenticated,)
+
+    def get_queryset(self):
+        return Ingredient.objects.all()

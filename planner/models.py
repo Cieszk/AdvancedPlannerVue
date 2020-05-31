@@ -13,7 +13,14 @@ class Task(models.Model):
     def __str__(self):
         return self.name
 
+
 class Ingredient(models.Model):
+    name = models.CharField(max_length=64, unique=True)
+
+    def __str__(self):
+        return self.name
+
+class IngredientDetail(models.Model):
     UNITS = (
         ('G', 'gram'),
         ('L', 'liter'),
@@ -24,8 +31,7 @@ class Ingredient(models.Model):
         ('GL', 'glass'),
         ('PCS', 'pieces')
     )
-
-    name = models.CharField(max_length=64, null=True)
+    ingredient = models.ForeignKey(Ingredient, on_delete=models.CASCADE)
     amount = models.DecimalField(
             blank=True, 
             null=True, 
@@ -52,7 +58,7 @@ class Recipe(models.Model):
     description = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
-    ingredients = models.ForeignKey(Ingredient, on_delete=models.CASCADE)
+    ingredients = models.ForeignKey(IngredientDetail, on_delete=models.CASCADE)
     author = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
 
     class Meta:
@@ -65,6 +71,6 @@ class Recipe(models.Model):
 class GrocieresShoppingList(models.Model):
     author = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
     title = models.CharField(max_length=64)
-    ingredients = models.ForeignKey(Ingredient, on_delete=models.CASCADE)
+    ingredients = models.ForeignKey(IngredientDetail, on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)
     active = models.BooleanField(default=True)

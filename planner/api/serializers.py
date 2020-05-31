@@ -8,7 +8,7 @@ class TaskSerializer(serializers.ModelSerializer):
     """Serializer for Task model"""
     class Meta:
         model = Task
-        exclude = ('user',)
+        exclude = ('user', 'done')
 
 class IngredientSerializer(serializers.ModelSerializer):
     """Serializer for Ingredient model"""
