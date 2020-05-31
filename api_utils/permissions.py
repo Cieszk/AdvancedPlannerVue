@@ -14,3 +14,8 @@ class IsAdminOrDenyAccess(permissions.BasePermission):
         if request.user.admin:
             return True
         return False
+
+class IsAccountOwnerOrDenyAccess(permissions.BasePermission):
+
+    def has_object_permission(self, request, view, obj):
+        return obj.user == request.user

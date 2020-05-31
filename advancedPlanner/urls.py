@@ -10,7 +10,9 @@ from users.forms import CustomRegisterForm
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    
     path('api/', include('users.api.urls')),
+    path('api/', include('planner.api.urls')),
 
     path('accounts/register/', RegistrationView.as_view(
         form_class=CustomRegisterForm,
