@@ -3,6 +3,7 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.generics import get_object_or_404
+from rest_framework.decorators import action
 
 from planner.models import (
     Recipe, 
@@ -56,9 +57,33 @@ class TaskSetAsDoneAPIView(APIView):
         return Response(serializer.data, status=status.HTTP_200_OK)
 
 
-class IngredientListAPIView(viewsets.ModelViewSet):
+class IngredientListCreateAPIViewSet(viewsets.ModelViewSet):
     serializer_class = IngredientSerializer
     permission_classes = (IsAuthenticated,)
 
     def get_queryset(self):
-        return Ingredient.objects.all()
+        current_user = self.request.user
+        return Ingredient.objects.all().filter(author=current_user)
+
+class RecipeListAPIView(generics.ListAPIView):
+    serializer_class = RecipeSerializer
+    permission_classes = (IsAuthenticated,)
+
+    def get_queryset(self):
+        return Recipe.objects.all()
+
+class RecipeCreateAPIView(generics.CreateAPIView):
+    permission_classes = (IsAuthenticated,)
+    serializer_class = RecipeSerializer
+
+    def perform_create(self, serializer):
+        author = self.request.user
+        serializer.save(author=author)
+    
+class RecipeRUDAPIView(generics.RetrieveUpdateDestroyAPIView):
+    permission_classes = (IsAuthenticated,)
+    serializer_class = RecipeSerializer
+
+    def get_queryset(self):
+        current_user = self.request.user
+        return Recipe.objects.all().filter(author=current_user)

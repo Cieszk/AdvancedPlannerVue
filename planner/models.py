@@ -15,12 +15,6 @@ class Task(models.Model):
 
 
 class Ingredient(models.Model):
-    name = models.CharField(max_length=64, unique=True)
-
-    def __str__(self):
-        return self.name
-
-class IngredientDetail(models.Model):
     UNITS = (
         ('G', 'gram'),
         ('L', 'liter'),
@@ -31,7 +25,7 @@ class IngredientDetail(models.Model):
         ('GL', 'glass'),
         ('PCS', 'pieces')
     )
-    ingredient = models.ForeignKey(Ingredient, on_delete=models.CASCADE)
+    name = models.CharField(max_length=64)
     amount = models.DecimalField(
             blank=True, 
             null=True, 
@@ -43,7 +37,7 @@ class IngredientDetail(models.Model):
             blank=True, 
             null=True, 
             choices=UNITS, 
-            default=[0][0]
+            default=UNITS[0][0]
         )
     active = models.BooleanField(default=True)
 
@@ -58,9 +52,8 @@ class Recipe(models.Model):
     description = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
-    ingredients = models.ForeignKey(IngredientDetail, on_delete=models.CASCADE)
+    ingredients = models.ManyToManyField(Ingredient)
     author = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
-
     class Meta:
         ordering = ['-created_at']
 
@@ -71,6 +64,6 @@ class Recipe(models.Model):
 class GrocieresShoppingList(models.Model):
     author = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
     title = models.CharField(max_length=64)
-    ingredients = models.ForeignKey(IngredientDetail, on_delete=models.CASCADE)
+    ingredients = models.ManyToManyField(Ingredient)
     created_at = models.DateTimeField(auto_now_add=True)
     active = models.BooleanField(default=True)

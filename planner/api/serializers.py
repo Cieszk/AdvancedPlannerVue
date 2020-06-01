@@ -2,7 +2,12 @@ from django.contrib.admin.widgets import AdminSplitDateTime
 
 from rest_framework import serializers
 
-from planner.models import Task, Ingredient, Recipe, GrocieresShoppingList
+from planner.models import (
+    Task, 
+    Ingredient, 
+    Recipe, 
+    GrocieresShoppingList
+)
 
 class TaskSerializer(serializers.ModelSerializer):
     """Serializer for Task model"""
@@ -18,10 +23,11 @@ class IngredientSerializer(serializers.ModelSerializer):
     
 class RecipeSerializer(serializers.ModelSerializer):
     """Serializer for Recipe model"""
-    ingredients = IngredientSerializer(many=True)
+    ingredients = serializers.PrimaryKeyRelatedField(many=True, queryset=Ingredient.objects.all())
     class Meta:
         model = Recipe
         fields = '__all__'
+        read_only_fileds = ['author']
 
 class GrocieresShoppingListSerializer(serializers.ModelSerializer):
     """Serializer for GroceriesShoppingList model"""
