@@ -63,7 +63,11 @@ class IngredientListCreateAPIViewSet(viewsets.ModelViewSet):
 
     def get_queryset(self):
         current_user = self.request.user
-        return Ingredient.objects.all().filter(author=current_user)
+        return Ingredient.objects.all()
+    
+    def perform_create(self, serializer):
+        current_user = self.request.user
+        serializer.save(user=current_user)
 
 class RecipeListAPIView(generics.ListAPIView):
     serializer_class = RecipeSerializer
@@ -78,7 +82,7 @@ class RecipeCreateAPIView(generics.CreateAPIView):
 
     def perform_create(self, serializer):
         author = self.request.user
-        serializer.save(author=author)
+        serializer.save(user=author)
     
 class RecipeRUDAPIView(generics.RetrieveUpdateDestroyAPIView):
     permission_classes = (IsAuthenticated,)
@@ -86,4 +90,24 @@ class RecipeRUDAPIView(generics.RetrieveUpdateDestroyAPIView):
 
     def get_queryset(self):
         current_user = self.request.user
-        return Recipe.objects.all().filter(author=current_user)
+        return Recipe.objects.all().filter(user=current_user)
+
+class GroceriesShoppingListCreateAPIViewSet(viewsets.ModelViewSet):
+    serializer_class = GrocieresShoppingListSerializer
+    permission_classes = (IsAuthenticated,)
+
+    def get_queryset(self):
+        current_user = self.request.user
+        return GrocieresShoppingList.objects.all().filter(user=current_user, active=True)
+
+    def perform_create(self, serializer):
+        current_user = self.request.user
+        serializer.save(user=current_user)
+
+class GroceriesRUDAPIView(generics.RetrieveUpdateDestroyAPIView):
+    permission_classes = (IsAuthenticated,)
+    serializer_class = GrocieresShoppingListSerializer
+
+    def get_queryset(self):
+        current_user = self.request.user
+        return GrocieresShoppingList.objects.all().filter(user=current_user)

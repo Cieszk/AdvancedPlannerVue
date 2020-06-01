@@ -40,6 +40,7 @@ class Ingredient(models.Model):
             default=UNITS[0][0]
         )
     active = models.BooleanField(default=True)
+    user = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
 
     def __str__(self):
         return self.name
@@ -53,7 +54,7 @@ class Recipe(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     ingredients = models.ManyToManyField(Ingredient)
-    author = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
+    user = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
     class Meta:
         ordering = ['-created_at']
 
@@ -62,7 +63,7 @@ class Recipe(models.Model):
 
 
 class GrocieresShoppingList(models.Model):
-    author = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
+    user = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
     title = models.CharField(max_length=64)
     ingredients = models.ManyToManyField(Ingredient)
     created_at = models.DateTimeField(auto_now_add=True)
