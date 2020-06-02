@@ -3,7 +3,6 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.generics import get_object_or_404
-from rest_framework.decorators import action
 
 from planner.models import (
     Recipe, 
@@ -17,7 +16,8 @@ from planner.api.serializers import (
     RecipeSerializer,
     TaskSerializer
 )
-from api_utils.permissions import IsAccountOwnerOrDenyAccess, IsAdminOrDenyAccess
+from core.api_utils.permissions import IsAccountOwnerOrDenyAccess
+
 
 class TaskListAPIView(viewsets.ModelViewSet):
     serializer_class = TaskSerializer

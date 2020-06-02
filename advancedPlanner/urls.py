@@ -1,5 +1,5 @@
 from django.contrib import admin
-from django.urls import path, include
+from django.urls import path, include, re_path
 from django.conf.urls.static import static
 from django.contrib.auth import settings
 
@@ -27,5 +27,7 @@ urlpatterns = [
     path('api/rest-auth/', include('rest_auth.urls')),
     # Register via Rest
     path('api/rest-auth/registration/', include('rest_auth.registration.urls')),
+
+    re_path(r'^.*$', IndexTemplateView.as_view(), name='entry_point')
 
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
