@@ -4,9 +4,9 @@ from django.conf.urls.static import static
 from django.contrib.auth import settings
 
 from django_registration.backends.one_step.views import RegistrationView
-# from django_registration.backends.activation.views import RegistrationView
 
 from users.forms import CustomRegisterForm
+from core.views import IndexTemplateView
 
 urlpatterns = [
     path('admin/', admin.site.urls),

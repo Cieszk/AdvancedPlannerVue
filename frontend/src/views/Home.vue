@@ -1,18 +1,24 @@
 <template>
-  <div class="home">
-    <img alt="Vue logo" src="../assets/logo.png" />
-    <HelloWorld msg="Welcome to Your Vue.js App" />
-  </div>
+    <div class="container mt-5">
+        <div class="jumbotron">
+            <h1 class="display-3">Welcome, <p>in Advanced Planner!</p></h1>
+            <p class="lead">This is a simple application for creating your To-do lists, own recipes or even shopping
+                lists,
+                to buy necessary ingredients!</p>
+            <hr class="my-4">
+            <p>You can also manage your profile and check awesome statistics!</p>
+        </div>
+    </div>
 </template>
 
 <script>
-// @ is an alias to /src
-import HelloWorld from "@/components/HelloWorld.vue";
 
-export default {
-  name: "Home",
-  components: {
-    HelloWorld
-  }
-};
+
+    export default {
+        name: "Home",
+    };
 </script>
+
+<style scoped>
+
+</style>
