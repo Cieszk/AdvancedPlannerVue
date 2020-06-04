@@ -1,31 +1,50 @@
 <template>
     <div>
-        <div class="container mt-5" v-if="tasks.done">
-            <div class="task-border mb-3" v-for="task in tasks"
+        <div class="container mt-5">
+            <div v-for="task in tasks"
                  :key="task.id">
-                <div class="d-flex w-100 justify-content-between">
-                    <h5 class="mb-1">{{ task.name }}</h5>
-                    <div style="display: inline-block;">
-                        <small class="text-muted">{{ task.created_at }}
+                <div v-if="!task.done" class="task-border mb-3">
+                    <div class="d-flex w-100 justify-content-between">
+                        <h5 class="mb-1">{{ task.name }}</h5>
+                        <div style="display: inline-block;">
+                            <small class="text-muted">{{ task.created_at }}
 
-                        </small>
-                        <Task
-                                :key="task.id"
-                                :task="task"
-                                @archive-task="archiveTask"
-                        />
+                            </small>
+                            <Task
+                                    :key="task.id"
+                                    :task="task"
+                                    @archive-task="archiveTask"
+                            />
+                        </div>
                     </div>
+                    <small class="text-muted">{{ task.description }}</small>
                 </div>
-                <small class="text-muted">{{ task.description }}</small>
             </div>
         </div>
-        <div>
-            <div class="form-group mt-4">
-                <label for="exampleTextarea">Add new task</label>
-                <textarea class="form-control" id="exampleTextarea" rows="3"></textarea>
-            </div>
+        <div class="container mt-5">
+            <form class="card card-color" @submit.prevent="createNewTask">
+                <div class="card-header px-3">
+                    Add new Task
+                </div>
+                <div class="card-block">
+                <textarea
+                        class="form-control"
+                        rows="3"
+                        cols="3"
+                        v-model="newTaskBody"
+                        placeholder="Create new task!"
+                >
+
+                </textarea>
+                </div>
+                <div class="card-footer px-3">
+                    <button type="submit" class="btn btn-sm btn-secondary ml-2">Add task</button>
+                </div>
+                <p v-if="error" class="error mt-2 alert alert-danger"> {{ error }}</p>
+            </form>
         </div>
     </div>
+
 </template>
 
 <script>
@@ -38,6 +57,9 @@
         data() {
             return {
                 tasks: [],
+                newTaskBody: null,
+                error: null,
+                showForm: false
             }
         },
         methods: {
@@ -50,13 +72,30 @@
             },
             async archiveTask(task) {
                 let endpoint = `/api/tasks/${task.id}`;
-                var task_index;
+                // var task_index;
                 try {
                     await apiService(endpoint);
-                    task_index = this.tasks.indexOf(task);
-                    Object.assign(this.tasks[task_index], {done: true})
+                    // task_index = this.tasks.indexOf(task);
+                    // Object.assign(this.tasks[task_index], {done: true})
+                    task.done = true
                 } catch (err) {
                     console.log(err)
+                }
+            },
+            createNewTask() {
+                if (this.newTaskBody) {
+                    let endpoint = `/api/tasks/`;
+                    apiService(endpoint, 'POST', {name: this.newTaskBody})
+                        .then(data => {
+                            this.tasks.unshift(data)
+                        });
+                    this.newTaskBody = null;
+                    this.showForm = false;
+                    if (this.error) {
+                        this.error = null;
+                    }
+                } else {
+                    this.error = 'You can\'t add an empty task!'
                 }
             }
         },
@@ -73,6 +112,10 @@
         margin: auto;
         border-radius: 10px;
         padding: 8px;
+        background-color: #333a41;
+    }
+
+    .card-color {
         background-color: #333a41;
     }
 </style>
