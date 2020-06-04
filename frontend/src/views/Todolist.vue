@@ -70,14 +70,10 @@
                         this.tasks.push(...data.results);
                     })
             },
-            async archiveTask(task) {
-                let endpoint = `/api/tasks/${task.id}`;
-                // var task_index;
+            archiveTask(task) {
+                let endpoint = `/api/tasks/${task.id}/`;
                 try {
-                    await apiService(endpoint);
-                    // task_index = this.tasks.indexOf(task);
-                    // Object.assign(this.tasks[task_index], {done: true})
-                    task.done = true
+                    apiService(endpoint, 'PATCH', {done: true})
                 } catch (err) {
                     console.log(err)
                 }

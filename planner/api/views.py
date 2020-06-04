@@ -5,9 +5,9 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.generics import get_object_or_404
 
 from planner.models import (
-    Recipe, 
-    Ingredient, 
-    Task, 
+    Recipe,
+    Ingredient,
+    Task,
     GrocieresShoppingList
 )
 from planner.api.serializers import (
@@ -40,6 +40,7 @@ class TaskRUDAPIView(generics.RetrieveUpdateDestroyAPIView):
         current_user = self.request.user
         return Task.objects.all().filter(user=current_user)
 
+
 class TaskSetAsDoneAPIView(APIView):
     serializer_class = TaskSerializer
     permission_classes = (IsAuthenticated, IsAccountOwnerOrDenyAccess)
@@ -64,10 +65,11 @@ class IngredientListCreateAPIViewSet(viewsets.ModelViewSet):
     def get_queryset(self):
         current_user = self.request.user
         return Ingredient.objects.all()
-    
+
     def perform_create(self, serializer):
         current_user = self.request.user
         serializer.save(user=current_user)
+
 
 class RecipeListAPIView(generics.ListAPIView):
     serializer_class = RecipeSerializer
@@ -76,6 +78,7 @@ class RecipeListAPIView(generics.ListAPIView):
     def get_queryset(self):
         return Recipe.objects.all()
 
+
 class RecipeCreateAPIView(generics.CreateAPIView):
     permission_classes = (IsAuthenticated,)
     serializer_class = RecipeSerializer
@@ -83,7 +86,8 @@ class RecipeCreateAPIView(generics.CreateAPIView):
     def perform_create(self, serializer):
         author = self.request.user
         serializer.save(user=author)
-    
+
+
 class RecipeRUDAPIView(generics.RetrieveUpdateDestroyAPIView):
     permission_classes = (IsAuthenticated,)
     serializer_class = RecipeSerializer
@@ -91,6 +95,7 @@ class RecipeRUDAPIView(generics.RetrieveUpdateDestroyAPIView):
     def get_queryset(self):
         current_user = self.request.user
         return Recipe.objects.all().filter(user=current_user)
+
 
 class GroceriesShoppingListCreateAPIViewSet(viewsets.ModelViewSet):
     serializer_class = GrocieresShoppingListSerializer
@@ -103,6 +108,7 @@ class GroceriesShoppingListCreateAPIViewSet(viewsets.ModelViewSet):
     def perform_create(self, serializer):
         current_user = self.request.user
         serializer.save(user=current_user)
+
 
 class GroceriesRUDAPIView(generics.RetrieveUpdateDestroyAPIView):
     permission_classes = (IsAuthenticated,)
