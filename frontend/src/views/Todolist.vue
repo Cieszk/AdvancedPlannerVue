@@ -2,14 +2,15 @@
     <div>
         <div class="container mt-5">
             <div v-for="task in tasks"
-                 :key="task.id">
+                 :key="task.id"
+            >
                 <div v-if="!task.done" class="task-border mb-3">
-                    <div class="d-flex w-100 justify-content-between">
-                        <h5 class="mb-1">{{ task.name }}</h5>
-                        <div style="display: inline-block;">
-                            <small class="text-muted">{{ task.created_at }}
-
-                            </small>
+                    <div class="d-flex">
+                        <h5 class="mr-auto p-2">{{ task.name }}</h5>
+                        <div class="p-2">
+                            <small class="text-muted">{{ task.created_at }}</small>
+                        </div>
+                        <div class="p-2">
                             <Task
                                     :key="task.id"
                                     :task="task"
@@ -20,13 +21,12 @@
                     <small class="text-muted">{{ task.description }}</small>
                 </div>
             </div>
-        </div>
-        <div class="container mt-5">
-            <form class="card card-color" @submit.prevent="createNewTask">
-                <div class="card-header px-3">
-                    Add new Task
-                </div>
-                <div class="card-block">
+            <div class="container mt-5">
+                <form class="card card-color" @submit.prevent="createNewTask">
+                    <div class="card-header px-3">
+                        Add new Task
+                    </div>
+                    <div class="card-block">
                 <textarea
                         class="form-control"
                         rows="3"
@@ -36,12 +36,13 @@
                 >
 
                 </textarea>
-                </div>
-                <div class="card-footer px-3">
-                    <button type="submit" class="btn btn-sm btn-secondary ml-2">Add task</button>
-                </div>
+                    </div>
+                    <div class="card-footer px-3">
+                        <button type="submit" class="btn btn-sm btn-secondary ml-2">Add task</button>
+                    </div>
+                </form>
                 <p v-if="error" class="error mt-2 alert alert-danger"> {{ error }}</p>
-            </form>
+            </div>
         </div>
     </div>
 
@@ -59,7 +60,7 @@
                 tasks: [],
                 newTaskBody: null,
                 error: null,
-                showForm: false
+                showForm: false,
             }
         },
         methods: {
@@ -73,7 +74,8 @@
             archiveTask(task) {
                 let endpoint = `/api/tasks/${task.id}/`;
                 try {
-                    apiService(endpoint, 'PATCH', {done: true})
+                    apiService(endpoint, 'PATCH', {done: true});
+                    this.$set(task, 'done', true)
                 } catch (err) {
                     console.log(err)
                 }
