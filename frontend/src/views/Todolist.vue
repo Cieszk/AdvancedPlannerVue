@@ -8,7 +8,8 @@
                     <div class="d-flex">
                         <h5 class="mr-auto p-2">{{ task.name }}</h5>
                         <div class="p-2">
-                            <small class="text-muted">Created at:</small> <small> {{ task.created_at|formatDate }} </small>
+                            <small class="text-muted">Created at:</small> <small> {{ task.created_at|formatDate
+                            }} </small>
                         </div>
                         <div class="p-2">
                             <Task
@@ -19,13 +20,30 @@
                         </div>
                     </div>
                 </div>
-            </div>
-            <div class="container mt-5">
-                <form class="card card-color" @submit.prevent="createNewTask">
-                    <div class="card-header px-3">
-                        Add new Task
+                <div v-else-if="task.done" class="task-border mb-3">
+                    <div class="d-flex">
+                        <h5 class="mr-auto p-2">
+                            <del>{{ task.name }}</del>
+                        </h5>
+                        <div class="p-2">
+                            <small class="text-muted">Created at:</small> <small> {{ task.created_at|formatDate
+                            }} </small>
+                        </div>
+                        <div class="p-2">
+                            <div class="alert alert-success">
+                                Task Archived
+                            </div>
+                        </div>
                     </div>
-                    <div class="card-block">
+                </div>
+            </div>
+        </div>
+        <div class="container mt-5">
+            <form class="card card-color" @submit.prevent="createNewTask">
+                <div class="card-header px-3">
+                    Add new Task
+                </div>
+                <div class="card-block">
                 <textarea
                         class="form-control"
                         rows="3"
@@ -35,15 +53,15 @@
                 >
 
                 </textarea>
-                    </div>
-                    <div class="card-footer px-3">
-                        <button type="submit" class="btn btn-sm btn-secondary ml-2">Add task</button>
-                    </div>
-                </form>
-                <p v-if="error" class="error mt-2 alert alert-danger"> {{ error }}</p>
-            </div>
+                </div>
+                <div class="card-footer px-3">
+                    <button type="submit" class="btn btn-sm btn-secondary ml-2">Add task</button>
+                </div>
+            </form>
+            <p v-if="error" class="error mt-2 alert alert-danger"> {{ error }}</p>
         </div>
     </div>
+
 
 </template>
 
@@ -102,7 +120,7 @@
         },
         filters: {
             formatDate: function (value) {
-                if(value) {
+                if (value) {
                     return moment(String(value)).format('DD/MM/YYYY hh:mm')
                 }
             }
