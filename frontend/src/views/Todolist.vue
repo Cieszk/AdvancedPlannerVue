@@ -8,7 +8,7 @@
                     <div class="d-flex">
                         <h5 class="mr-auto p-2">{{ task.name }}</h5>
                         <div class="p-2">
-                            <small class="text-muted">{{ task.created_at }}</small>
+                            <small class="text-muted">Created at:</small> <small> {{ task.created_at|formatDate }} </small>
                         </div>
                         <div class="p-2">
                             <Task
@@ -18,7 +18,6 @@
                             />
                         </div>
                     </div>
-                    <small class="text-muted">{{ task.description }}</small>
                 </div>
             </div>
             <div class="container mt-5">
@@ -51,6 +50,7 @@
 <script>
     import {apiService} from "../common/api.service";
     import Task from "../components/Task";
+    import moment from "moment"
 
     export default {
         name: "Todolist",
@@ -95,10 +95,17 @@
                 } else {
                     this.error = 'You can\'t add an empty task!'
                 }
-            }
+            },
         },
         created() {
             this.getTasks()
+        },
+        filters: {
+            formatDate: function (value) {
+                if(value) {
+                    return moment(String(value)).format('DD/MM/YYYY hh:mm')
+                }
+            }
         }
     }
 </script>
