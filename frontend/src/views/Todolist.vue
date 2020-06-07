@@ -1,5 +1,13 @@
 <template>
     <div>
+        <ul class="nav nav-tabs">
+  <li class="nav-item">
+    <a class="nav-link active" data-toggle="tab" href="#home">Active</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" data-toggle="tab" href="#profile">Archived</a>
+  </li>
+</ul>
         <div class="container mt-5">
             <div v-for="task in tasks"
                  :key="task.id"
