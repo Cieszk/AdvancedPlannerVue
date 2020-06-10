@@ -1,8 +1,8 @@
 <template>
     <div>
-        <ul class="nav">
+        <ul class="nav nav-tabs bg-dark tab-container-style">
             <li class="nav-item">
-                <router-link class="nav-link active" :to="{name: 'Todolist'}">Active Tasks</router-link>
+                <router-link class="nav-link" :to="{name: 'Todolist'}">Active Tasks</router-link>
             </li>
             <li class="nav-item">
                 <router-link class="nav-link" :to="{ name: 'ArchivedTodolist' }">Archived Tasks</router-link>
@@ -22,6 +22,10 @@
                             <small class="text-muted">Created at:</small> <small> {{ task.created_at|formatDate
                             }} </small>
                         </div>
+                        <div class="p-2">
+                            <small class="text-muted">Archived at:</small> <small> {{ task.archived_at|formatDate
+                            }} </small>
+                            </div>
                         <div class="p-2">
                             <div class="alert alert-success">
                                 Task Archived
@@ -79,4 +83,11 @@
         background-color: #333a41;
     }
 
+    .tab-container-style {
+        border-top: solid 1px #888;
+    }
+
+    .nav-tabs {
+        border-bottom: none;
+    }
 </style>
