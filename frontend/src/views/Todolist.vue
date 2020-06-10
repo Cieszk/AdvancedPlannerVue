@@ -1,51 +1,14 @@
 <template>
     <div>
-        <ul class="nav nav-tabs">
-  <li class="nav-item">
-    <a class="nav-link active" data-toggle="tab" href="#home">Active</a>
-  </li>
-  <li class="nav-item">
-    <a class="nav-link" data-toggle="tab" href="#profile">Archived</a>
-  </li>
-</ul>
-        <div class="container mt-5">
-            <div v-for="task in tasks"
-                 :key="task.id"
-            >
-                <div v-if="!task.done" class="task-border mb-3">
-                    <div class="d-flex">
-                        <h5 class="mr-auto p-2">{{ task.name }}</h5>
-                        <div class="p-2">
-                            <small class="text-muted">Created at:</small> <small> {{ task.created_at|formatDate
-                            }} </small>
-                        </div>
-                        <div class="p-2">
-                            <Task
-                                    :key="task.id"
-                                    :task="task"
-                                    @archive-task="archiveTask"
-                            />
-                        </div>
-                    </div>
-                </div>
-                <div v-else-if="task.done" class="task-border mb-3">
-                    <div class="d-flex">
-                        <h5 class="mr-auto p-2">
-                            <del>{{ task.name }}</del>
-                        </h5>
-                        <div class="p-2">
-                            <small class="text-muted">Created at:</small> <small> {{ task.created_at|formatDate
-                            }} </small>
-                        </div>
-                        <div class="p-2">
-                            <div class="alert alert-success">
-                                Task Archived
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+        <ul class="nav">
+            <li class="nav-item">
+                <router-link class="nav-link active" :to="{name: 'Todolist'}">Active Tasks</router-link>
+            </li>
+            <li class="nav-item">
+                <router-link class="nav-link" :to="{ name: 'ArchivedTodolist' }">Archived Tasks</router-link>
+            </li>
+        </ul>
+
         <div class="container mt-5">
             <form class="card card-color" @submit.prevent="createNewTask">
                 <div class="card-header px-3">
@@ -68,6 +31,38 @@
             </form>
             <p v-if="error" class="error mt-2 alert alert-danger"> {{ error }}</p>
         </div>
+
+        <div class="container mt-5">
+            <div v-for="task in tasks"
+                 :key="task.id"
+            >
+                <div v-if="!task.done" class="task-border mb-3">
+                    <div class="d-flex">
+                        <h5 class="mr-auto p-2">{{ task.name }}</h5>
+                        <div class="p-2">
+                            <small class="text-muted">Created at:</small> <small> {{ task.created_at|formatDate
+                            }} </small>
+                        </div>
+                        <div class="p-2">
+                            <Task
+                                    :key="task.id"
+                                    :task="task"
+                                    @archive-task="archiveTask"
+                            />
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="my-4">
+                <p v-show="loadingQuestions">...loading... </p>
+                <button
+                        v-show="next"
+                        @click="getTasks"
+                        class="btn btn-sm btn-outline-danger container">
+                    Load More
+                </button>
+            </div>
+        </div>
     </div>
 
 
@@ -84,18 +79,29 @@
         data() {
             return {
                 tasks: [],
-                newTaskBody: null,
+                next: null,
                 error: null,
                 showForm: false,
+                loadingTasks: false
             }
         },
         methods: {
             getTasks() {
                 let endpoint = '/api/tasks/';
+                if (this.next) {
+                    endpoint = this.next;
+                }
+                this.loadingTasks = true;
                 apiService(endpoint)
-                    .then(data => {
-                        this.tasks.push(...data.results);
-                    })
+                .then(data => {
+                    this.tasks.push(...data.results);
+                    this.loadingTasks = false;
+                    if (data.next) {
+                        this.next = data.next;
+                    } else {
+                        this.next = null;
+                    }
+                })
             },
             archiveTask(task) {
                 let endpoint = `/api/tasks/${task.id}/`;

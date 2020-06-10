@@ -25,7 +25,7 @@ class TaskListAPIView(viewsets.ModelViewSet):
 
     def get_queryset(self):
         current_user = self.request.user
-        return Task.objects.all().filter(user=current_user, done=False)
+        return Task.objects.all().filter(user=current_user)
 
     def perform_create(self, serializer):
         current_user = self.request.user

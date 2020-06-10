@@ -2,6 +2,7 @@ import Vue from "vue";
 import VueRouter from "vue-router";
 import Home from "../views/Home.vue";
 import Todolist from "../views/Todolist";
+import ArchivedTasks from "../components/ArchivedTasks";
 
 Vue.use(VueRouter);
 
@@ -15,6 +16,11 @@ const routes = [
     path: '/todo-list/',
     name: 'Todolist',
     component: Todolist
+  },
+  {
+    path: '/todo-list/archived/',
+    name: 'ArchivedTodolist',
+    component: ArchivedTasks
   }
 ];
 
