@@ -60,7 +60,7 @@ class Recipe(models.Model):
         ordering = ['-created_at']
 
     def __str__(self):
-        return f'{self.title} - by {self.author}'
+        return f'{self.title} - by {self.user}'
 
 
 class GrocieresShoppingList(models.Model):

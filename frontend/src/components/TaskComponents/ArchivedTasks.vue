@@ -41,7 +41,7 @@
 </template>
 
 <script>
-    import {apiService} from "../common/api.service";
+    import {apiService} from "../../common/api.service";
     import moment from "moment";
 
     export default {

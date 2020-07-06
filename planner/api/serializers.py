@@ -30,7 +30,7 @@ class IngredientSerializer(serializers.ModelSerializer):
 
 class RecipeSerializer(serializers.ModelSerializer):
     """Serializer for Recipe model"""
-    ingredients = serializers.PrimaryKeyRelatedField(many=True, queryset=Ingredient.objects.all())
+    ingredients = serializers.StringRelatedField(many=True)
 
     class Meta:
         model = Recipe

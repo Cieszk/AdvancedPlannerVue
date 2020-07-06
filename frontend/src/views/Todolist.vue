@@ -12,10 +12,10 @@
         <div class="container mother-container mt-4">
             <div class="container mt-5 ">
                 <form class="card card-color form-border" @submit.prevent="createNewTask">
-                    <div class="card-header px-3 mr-2">
+                    <div class="card-header px-3">
                         Add new Task
                     </div>
-                    <div class="card-block">
+                    <div class="card-block mx-3">
                         <textarea
                                 class="form-control pull-left"
                                 rows="3"
@@ -71,7 +71,7 @@
 
 <script>
     import {apiService} from "../common/api.service";
-    import Task from "../components/Task";
+    import Task from "../components/TaskComponents/Task";
     import moment from "moment"
 
     export default {
@@ -129,6 +129,13 @@
                     this.error = 'You can\'t add an empty task!'
                 }
             },
+            tasksDoneLength() {
+                var taskValue = false;
+                var filtered = this.tasks.filter((item) => {
+                    return Object.keys(item).some((key) => item[key].includes(taskValue))
+                });
+                console.log(filtered)
+            }
         },
         created() {
             this.getTasks()
@@ -176,6 +183,7 @@
         border-top: solid 1px #888;
 
     }
+
     .nav-tabs {
         border-bottom: none;
     }

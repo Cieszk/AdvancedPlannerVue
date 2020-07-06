@@ -138,8 +138,8 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
-MEDIA_URL = '/media/'
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+MEDIA_URL = '/frontend/src/assets/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'frontend/src/assets/')
 
 AUTH_USER_MODEL = 'users.CustomUser'
 

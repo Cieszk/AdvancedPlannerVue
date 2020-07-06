@@ -23,7 +23,10 @@
                         </router-link>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Recipes</a>
+                        <router-link
+                        :to="{ name: 'Recipies' }"
+                        class="nav-link"
+                        >Recipes</router-link>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="#">Shopping list</a>
